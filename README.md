@@ -3,7 +3,7 @@
 C'est dans le cadre d'un projet scolaire (en duo) de 2ème année d'école d'ingénieurs que nous nous sommes lancé dans la programmation d'un Pac-Man jouable à 2 joueurs sur le même ordinateur. Il reprend les mêmes mécaniques que le Pac-Man classique à la différence que dans celui-ci, il faudra faire attention aux collisions entre joueurs qui font perdre des vies, au bonus qui ne transforme pas obligatoirement le joueur en mode berseker mais qui peut aussi donner une vie supplémentaire ou un bonus de score. Les différentes sorties de map ne mènent pas obligatoirement à la sortie opposée : c'est alátoire.
 
 # À disposition :
-Si vous souhaitez regarder ou modifier le code source celui-ci est disponible sous le nom de dossier "PACMAN2P". Le jeux a été codé en JavaFx sur Intellij. Si vous souhaitez uniquement jouer au jeu, il vous suffit de télécharger uniquement le dossier "PACMAN2P (build)".
+Si vous souhaitez regarder ou modifier le code source celui-ci est disponible sous le nom de dossier "PACMAN2P". Le jeu a été codé en JavaFx sur Intellij. Si vous souhaitez uniquement jouer au jeu, il vous suffit de télécharger uniquement le dossier "PACMAN2P (build)".
 
 # Fonctionnalités :
 1. Vous avez la possibilité de personnaliser la map.
