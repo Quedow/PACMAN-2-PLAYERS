@@ -1,3 +1,6 @@
+/*
+PACMAN2P - MAMMA Quentin & LUQUET Steven - A21
+ */
 package com.company;
 
 import javafx.scene.Scene;
@@ -26,21 +29,22 @@ public class Vue {
 
     private Presentation presentation;
 
-    private int longueur;
-    private int hauteur;
-    private int taillePixel;
+    private final int longueur;
+    private final int hauteur;
+    private final int taillePixel;
     private boolean statBerseker;
+    private int[][] memoryStats;
 
     private ArrayList<ImageView> imagePlayers;
     private ArrayList<ImageView> imageGhosts;
     private ArrayList<Label> labels;
     private List<ColorAdjust> colorAdjusts;
 
-    private Stage fenetre = new Stage();
+    private Stage stage = new Stage();
 
     // Elements of the 1st view (menu)
     private Scene sceneMenu;
-    private Pane canvasMenu;
+    private Pane paneMenu;
     private Button onePlayer;
     private Button twoPlayer;
     private Button exit;
@@ -48,7 +52,7 @@ public class Vue {
 
     // Elements of the 2nd view (game)
     private Scene sceneGame;
-    private BorderPane borderPane;
+    private BorderPane borderPaneGame;
     private Pane pane;
     private Pane right;
     private Pane left;
@@ -56,6 +60,7 @@ public class Vue {
     public Vue(Presentation presentation)
     {
         this.presentation = presentation;
+        memoryStats = new int[2][2];
         statBerseker = false;
 
         Screen screen = Screen.getPrimary();
@@ -70,15 +75,15 @@ public class Vue {
         initializeGame();
 
         // Initialize scenes
-        sceneGame = new Scene(borderPane, longueur, hauteur);
-        sceneMenu = new Scene(canvasMenu, longueur, hauteur);
+        sceneGame = new Scene(borderPaneGame, longueur, hauteur);
+        sceneMenu = new Scene(paneMenu, longueur, hauteur);
 
         // Initialize window
-        fenetre.setTitle("PACMAN FOR 2 PLAYERS");
-        fenetre.setMaximized(true);
-        fenetre.setResizable(false);
-        fenetre.setScene(sceneMenu);
-        fenetre.show();
+        stage.setTitle("PACMAN FOR 2 PLAYERS");
+        stage.setMaximized(true);
+        stage.setResizable(false);
+        stage.setScene(sceneMenu);
+        stage.show();
 
         sceneGame.setOnKeyPressed(presentation);
         onePlayer.setOnAction(event -> initializeEntities(1));
@@ -103,9 +108,9 @@ public class Vue {
 
     // Initialize all Views
 
-    public void initializeMenu(){
-        canvasMenu = new Pane();
-        canvasMenu.setStyle("-fx-background-color: BLACK");
+    private void initializeMenu(){
+        paneMenu = new Pane();
+        paneMenu.setStyle("-fx-background-color: BLACK");
 
         Text title = new Text("PAC-MAN");
         title.setStyle("-fx-font: 120 Verdana; -fx-text-fill: YELLOW; -fx-font-weight: bold; -fx-stroke: firebrick; -fx-stroke-width: 4px;");
@@ -133,50 +138,52 @@ public class Vue {
 
         numberE = new TextField("Number of ghost ? (0-200)");
         numberE.setPrefSize(200,25);
+        numberE.setLayoutX(longueur/2.0-exit.getPrefWidth()/2.0);
+        numberE.setLayoutY(hauteur/2.0-160);
 
-        canvasMenu.getChildren().addAll(title, onePlayer, twoPlayer,exit, numberE);
+        paneMenu.getChildren().addAll(title, onePlayer, twoPlayer,exit, numberE);
     }
 
-    public void initializeGame(){
-        borderPane = new BorderPane();
+    private void initializeGame(){
+        borderPaneGame = new BorderPane();
 
         pane = new Pane();
-        pane.setMaxWidth(taillePixel*presentation.getColonnes());
+        pane.setMaxWidth(taillePixel*presentation.getColumns());
         pane.setStyle("-fx-background-color: DARKBLUE");
-        borderPane.setCenter(pane);
+        borderPaneGame.setCenter(pane);
 
         left = new Pane();
         left.setStyle("-fx-background-color: BLACK");
-        left.setMinWidth((longueur-taillePixel*presentation.getColonnes())/2.0);
-        borderPane.setLeft(left);
+        left.setMinWidth((longueur-taillePixel*presentation.getColumns())/2.0);
+        borderPaneGame.setLeft(left);
 
         right = new Pane();
         right.setStyle("-fx-background-color: BLACK");
-        right.setMinWidth((longueur-(taillePixel*presentation.getColonnes())-left.getMinWidth()));
-        borderPane.setRight(right);
+        right.setMinWidth((longueur-(taillePixel*presentation.getColumns())-left.getMinWidth()));
+        borderPaneGame.setRight(right);
 
         drawMap();
         initializeColors();
     }
 
-    public void drawMap() {
-        for (int L = 0; L < getLignes(); L++) {
-            for (int C = 0; C < getColonnes(); C++) {
+    private void drawMap() {
+        for (int L = 0; L < getLines(); L++) {
+            for (int C = 0; C < getColumns(); C++) {
 
-                if (matriceMap(L,C)==1) {
-                    unwalkableZone(L,C);
+                if (matrixMap(L,C)==1) {
+                    noWalkableZone(L,C);
                 }
-                else if (matriceMap(L,C)==2) {
+                else if (matrixMap(L,C)==2) {
                     walkableZone(L,C);
                     scoreZone(L,C);
                 }
-                else if (matriceMap(L,C)==3){
+                else if (matrixMap(L,C)==3){
                     walkableZone(L,C);
                 }
-                else if (matriceMap(L,C)==0){
+                else if (matrixMap(L,C)==0){
                     ghostZone(L,C);
                 }
-                else if (matriceMap(L,C)==4){
+                else if (matrixMap(L,C)==4){
                     walkableZone(L,C);
                     bonusZone(L,C);
                 }
@@ -184,7 +191,7 @@ public class Vue {
         }
     }
 
-    public void initializeColors() {
+    private void initializeColors() {
         ColorAdjust yellow = new ColorAdjust(); //Yellow car c'est la couleur de base de l'image
         ColorAdjust green = new ColorAdjust();
         green.setHue(0.3);
@@ -192,21 +199,21 @@ public class Vue {
         colorAdjusts = Arrays.asList(yellow, green);
     }
 
-    public void initializeEntities(int nJ){
-        fenetre.setScene(sceneGame);
+    private void initializeEntities(int nJ){
+        stage.setScene(sceneGame);
         presentation.setNumberJ(nJ);
         drawPlayer();
-        drawEnnemies();
-        drawScoreLabel();
+        drawEnemies();
+        drawStatsLabel();
     }
 
-    public void drawPlayer() {
+    private void drawPlayer() {
         imagePlayers = new ArrayList<ImageView>();
 
         for (int i = 0; i < getNumberJ(); i++) {
             ImageView imageView = new ImageView(new Image(new File("pacman.gif").toURI().toString()));
             imageView.setFitWidth(taillePixel); imageView.setFitHeight(taillePixel);
-            imageView.setX(getCplayer(i)*taillePixel); imageView.setY(getLplayer(i)*taillePixel);
+            imageView.setX(getCPlayer(i)*taillePixel); imageView.setY(getLPlayer(i)*taillePixel);
             imagePlayers.add(imageView);
 
             try {
@@ -220,34 +227,37 @@ public class Vue {
         }
     }
 
-    private void drawEnnemies() {
+    private void drawEnemies() {
         imageGhosts = new ArrayList<ImageView>();
 
         for (int i = 0; i < getNumberE(); i++) {
             ImageView imageView = new ImageView(new Image(new File("ghost.png").toURI().toString()));
             imageView.setFitWidth(taillePixel); imageView.setFitHeight(taillePixel);
-            imageView.setX(getCennemy(i)*taillePixel); imageView.setY(getLennemy(i)*taillePixel);
+            imageView.setX(getCEnemy(i)*taillePixel); imageView.setY(getLEnemy(i)*taillePixel);
             imageGhosts.add(imageView);
             pane.getChildren().add(imageGhosts.get(i));
         }
     }
 
-    public void drawScoreLabel() {
+    private void drawStatsLabel() {
         labels = new ArrayList<Label>();
 
-        for (int i = 0; i < presentation.getNumberJ(); i++) {
-            labels.add(new Label("Score Joueur "+i+" : "+getScore(i)+"\n"+"Vie Joueur "+i+" : "+getLife(i)));
-            labels.get(i).setFont(new Font("Arial", 25));
-            labels.get(i).setTextFill(Color.WHITE);
-            labels.get(i).setLayoutX(20);
-            labels.get(i).setLayoutY(i*35*2+15);
-            right.getChildren().add(labels.get(i));
+        for (int nJ = 0; nJ < presentation.getNumberJ(); nJ++) {
+            labels.add(new Label("Player score "+(nJ+1)+" : "+getScore(nJ)+"\n"+"Player life "+(nJ+1)+" : "+getLife(nJ)));
+            labels.get(nJ).setFont(new Font("Arial", 25));
+            labels.get(nJ).setTextFill(Color.WHITE);
+            labels.get(nJ).setLayoutX(20);
+            labels.get(nJ).setLayoutY(nJ*35*2+15);
+            right.getChildren().add(labels.get(nJ));
+
+            memoryStats[nJ][0]=getScore(nJ);
+            memoryStats[nJ][1]=getLife(nJ);
         }
     }
 
     // Move effects
 
-    public void updatePlayerVue(int nJ, int[] position, int[] xy){
+    public void updatePlayerPosition(int nJ, int[] position, int[] xy){
         imagePlayers.get(nJ).setX(position[0]*taillePixel);
         imagePlayers.get(nJ).setY(position[1]*taillePixel);
         if (xy[0]!=0){
@@ -255,44 +265,29 @@ public class Vue {
         }else {
             imagePlayers.get(nJ).setRotate(Math.asin(xy[1])*180/Math.PI);
         }
+        enemiesAreHoverAll();
         removeScoreBalls(nJ);
-        ennemiesAreHoverAll();
-        //showPositionPlayer(nJ);
     }
 
-    public void updatePlayerStat(){
-        for (int nJ = 0; nJ < getNumberJ(); nJ++) {
-            labels.get(nJ).setText("Score Joueur "+nJ+" : "+getScore(nJ)+"\n"+"Vie Joueur "+nJ+" : "+getLife(nJ));
+    public void updateViewElements(int nJ, boolean collisionPlayer, boolean collisionEnemy, int numberBerseker){
+        if (!left.getStyle().equals("-fx-background-color: BLACK")){
+            left.setStyle("-fx-background-color: BLACK");
+            right.setStyle("-fx-background-color: BLACK");
+            System.out.println("0");
         }
-    }
-
-    public void updateEnnemyVue(int nE, int[] position){
-        imageGhosts.get(nE).setX(position[0]*taillePixel);
-        imageGhosts.get(nE).setY(position[1]*taillePixel);
-    }
-
-    public void removeScoreBalls(int nJ){
-        if (matriceMap(getLplayer(nJ), getCplayer(nJ))==3){
-            walkableZone(getLplayer(nJ), getCplayer(nJ));
-            playersAreHoverAll();
+        else if (collisionPlayer || collisionEnemy){
+            left.setStyle("-fx-background-color: RED");
+            right.setStyle("-fx-background-color: RED");
         }
-    }
-
-    public void playersAreHoverAll(){
-        for (int i = 0; i < getNumberJ(); i++) {
-            pane.getChildren().remove(imagePlayers.get(i));
-            pane.getChildren().add(imagePlayers.get(i));
+        else if (memoryStats[nJ][1] < getLife(nJ)){
+            left.setStyle("-fx-background-color: GREEN");
+            right.setStyle("-fx-background-color: GREEN");
         }
-    }
-
-    public void ennemiesAreHoverAll(){
-        for (int i = 0; i < getNumberE(); i++) {
-            pane.getChildren().remove(imageGhosts.get(i));
-            pane.getChildren().add(imageGhosts.get(i));
+        else if (getScore(nJ)- memoryStats[nJ][0]==300){
+            left.setStyle("-fx-background-color: YELLOW");
+            right.setStyle("-fx-background-color: YELLOW");
         }
-    }
 
-    public void bersekerAmbiance(int nJ, boolean playerBerseker, int numberBerseker) {
         if (numberBerseker == 0 && statBerseker){
             for (int nE = 0; nE < getNumberE(); nE++) {
                 imageGhosts.get(nE).setImage(new Image(new File("ghost.png").toURI().toString()));
@@ -305,7 +300,13 @@ public class Vue {
             }
             statBerseker = true;
         }
+        labels.get(nJ).setText("Player score "+(nJ+1)+" : "+getScore(nJ)+"\n"+"Player life "+(nJ+1)+" : "+getLife(nJ));
 
+        memoryStats[nJ][0]=getScore(nJ);
+        memoryStats[nJ][1]=getLife(nJ);
+    }
+
+    public void updatePlayerSkin(int nJ, boolean playerBerseker) {
         if (!playerBerseker){
             imagePlayers.get(nJ).setImage(new Image(new File("pacman.gif").toURI().toString()));
         }else{
@@ -313,9 +314,35 @@ public class Vue {
         }
     }
 
+    public void updateEnemyPosition(int nE, int[] position){
+        imageGhosts.get(nE).setX(position[0]*taillePixel);
+        imageGhosts.get(nE).setY(position[1]*taillePixel);
+    }
+
+    public void removeScoreBalls(int nJ){
+        if (matrixMap(getLPlayer(nJ), getCPlayer(nJ))==3){
+            walkableZone(getLPlayer(nJ), getCPlayer(nJ));
+            playersAreHoverAll();
+        }
+    }
+
+    private void playersAreHoverAll(){
+        for (int i = 0; i < getNumberJ(); i++) {
+            pane.getChildren().remove(imagePlayers.get(i));
+            pane.getChildren().add(imagePlayers.get(i));
+        }
+    }
+
+    private void enemiesAreHoverAll(){
+        for (int i = 0; i < getNumberE(); i++) {
+            pane.getChildren().remove(imageGhosts.get(i));
+            pane.getChildren().add(imageGhosts.get(i));
+        }
+    }
+
     // Map Zone Drawer
 
-    public void unwalkableZone(int L, int C){
+    private void noWalkableZone(int L, int C){
         Rectangle rect = new Rectangle(taillePixel,taillePixel,Color.DARKBLUE);
         rect.setX(C*taillePixel);
         rect.setY(L*taillePixel);
@@ -323,7 +350,7 @@ public class Vue {
         pane.getChildren().add(rect);
     }
 
-    public void walkableZone(int L, int C){
+    private void walkableZone(int L, int C){
         Rectangle rect = new Rectangle(taillePixel,taillePixel,Color.BLACK);
         rect.setX(C*taillePixel);
         rect.setY(L*taillePixel);
@@ -331,7 +358,7 @@ public class Vue {
         pane.getChildren().add(rect);
     }
 
-    public void ghostZone(int L, int C){
+    private void ghostZone(int L, int C){
         Rectangle rect = new Rectangle(taillePixel,taillePixel,Color.WHITE);
         rect.setX(C*taillePixel);
         rect.setY(L*taillePixel);
@@ -339,14 +366,14 @@ public class Vue {
         pane.getChildren().add(rect);
     }
 
-    public void scoreZone(int L, int C){
+    private void scoreZone(int L, int C){
         Circle score = new Circle(setCenter(C),setCenter(L),taillePixel/6.0);
         score.setFill(Color.PINK);
         score.setSmooth(true);
         pane.getChildren().add(score);
     }
 
-    public void bonusZone(int L, int C){
+    private void bonusZone(int L, int C){
         Circle score = new Circle(setCenter(C),setCenter(L),taillePixel/3.5);
         score.setFill(Color.ORANGE);
         score.setSmooth(true);
@@ -355,53 +382,47 @@ public class Vue {
 
     // Autres méthodes
 
-    public int setCenter(int index){
-        return index*taillePixel+(taillePixel/2);
-    }
-
-    public void showPositionPlayer(int nJ){
-        System.out.println("Position du joueur "+nJ+" : Colonne "+ getCplayer(nJ)+", Ligne "+ getLplayer(nJ));
-    }
+    private int setCenter(int index){ return index*taillePixel+(taillePixel/2); }
 
     public void showWinner(int nWinner) {
         Label winner;
         if(nWinner!=-1){
-            winner = new Label("Gagant : Joueur "+nWinner);
+            winner = new Label("Winner : Player "+(nWinner+1));
         }else {
-            winner = new Label("Gagant : Fantômes");
+            winner = new Label("Winner : Ghosts");
         }
-        winner.setFont(new Font("Arial", 44));
-        winner.setTextFill(Color.RED);
+        winner.setFont(new Font("Arial", 42));
+        winner.setTextFill(Color.WHITE);
         winner.setLayoutX(10);
         winner.setLayoutY(5);
         left.getChildren().add(winner);
     }
 
-    public void fenetreSize() { fenetre.setMaximized(true); }
+    public void stageSize() { stage.setMaximized(true); }
 
-    //Get data of "PLayer" and "Ennemy" through "Presentation" and "Game"
+    //Get data of "PLayer" and "Enemy" through "Presentation" and "Game"
 
-    public int getLplayer(int id){ return presentation.getLplayer(id); }
+    private int getLPlayer(int id){ return presentation.getLPlayer(id); }
 
-    public int getCplayer(int id){ return presentation.getCplayer(id); }
+    private int getCPlayer(int id){ return presentation.getCPlayer(id); }
 
-    public int getLennemy(int id){ return presentation.getLennemy(id); }
+    private int getLEnemy(int id){ return presentation.getLEnemy(id); }
 
-    public int getCennemy(int id){ return presentation.getCennemy(id); }
+    private int getCEnemy(int id){ return presentation.getCEnemy(id); }
 
-    public int getScore(int nJ){ return presentation.getScore(nJ); }
+    private int getScore(int nJ){ return presentation.getScore(nJ); }
 
-    public int getLife(int nJ){ return presentation.getLife(nJ); }
+    private int getLife(int nJ){ return presentation.getLife(nJ); }
 
-    public int getColonnes(){ return presentation.getColonnes(); }
+    private int getColumns(){ return presentation.getColumns(); }
 
-    public int getLignes(){ return presentation.getLignes(); }
+    private int getLines(){ return presentation.getLines(); }
 
     //Get data of "Game" "Presentation"
 
-    public int matriceMap(int L, int C){ return presentation.statZone(L,C); }
+    private int matrixMap(int L, int C){ return presentation.statZone(L,C); }
 
-    public int getNumberJ(){ return presentation.getNumberJ(); }
+    private int getNumberJ(){ return presentation.getNumberJ(); }
 
-    public int getNumberE() { return presentation.getNumberE(); }
+    private int getNumberE() { return presentation.getNumberE(); }
 }

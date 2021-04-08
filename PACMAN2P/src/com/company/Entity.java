@@ -1,28 +1,31 @@
+/*
+PACMAN2P - MAMMA Quentin & LUQUET Steven - A21
+ */
 package com.company;
 
 public class Entity {
 
-    protected int Centity;
-    protected int Lentity;
+    protected int CEntity;
+    protected int LEntity;
 
     public Entity(){
-        Centity = 0;
-        Lentity = 0;
+        CEntity = 0;
+        LEntity = 0;
     }
 
     public void setPosition(int C, int P){
-        Centity = C;
-        Lentity = P;
+        CEntity = C;
+        LEntity = P;
     }
 
     public void moveEntity(int x, int y){
-        Centity+=x;
-        Lentity+=y;
+        CEntity +=x;
+        LEntity +=y;
     }
 
     public int randomValue(int borneInf, int borneSup){ return (int)(Math.random() * ((borneSup - borneInf) + 1)) + borneInf; }
 
-    public int getCentity(){ return Centity; }
+    public int getCEntity(){ return CEntity; }
 
-    public int getLentity(){ return Lentity; }
+    public int getLEntity(){ return LEntity; }
 }

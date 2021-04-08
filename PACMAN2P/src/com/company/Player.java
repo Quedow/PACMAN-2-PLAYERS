@@ -1,3 +1,6 @@
+/*
+PACMAN2P - MAMMA Quentin & LUQUET Steven - A21
+ */
 package com.company;
 
 public class Player extends Entity {
@@ -10,10 +13,11 @@ public class Player extends Entity {
     private int invincibleTime;
 
     public Player(){
-        Centity=0;
-        Lentity=0;
+        CEntity =0;
+        LEntity =0;
         score=0;
         life=3;
+
         berseker = false;
         bersekerTime = 0;
         invincible = false;
@@ -29,18 +33,16 @@ public class Player extends Entity {
             break;
             case 4:
                 incrementScore(200);
-                System.out.println("+200 de score");
             break;
             case 5:
-                life += 1;
-                System.out.println("+1 vie");
+                life += 2;
             break;
         }
     }
 
-    public void bersekerMode(){
+    private void bersekerMode(){
         berseker = true;
-        System.out.println("Berseker commence.");
+        System.out.println("Berseker début.");
     }
 
     public void incrementBersekerTime(){
@@ -49,7 +51,7 @@ public class Player extends Entity {
             if (bersekerTime >= 10){ //10 car cette methode s'effectue 1 fois/s
                 berseker = false;
                 bersekerTime = 0;
-                System.out.println("Berseker termine.");
+                System.out.println("Berseker fin.");
             }
         }
     }
@@ -60,7 +62,7 @@ public class Player extends Entity {
             if (invincibleTime >= 3){ //3 car cette methode s'effectue 3 fois/s
                 invincible = false;
                 invincibleTime = 0;
-                System.out.println("Invincible termine.");
+                System.out.println("Invincible fin.");
             }
         }
     }
@@ -69,7 +71,7 @@ public class Player extends Entity {
         if (!berseker && !invincible){
             life--;
             invincible = true;
-            System.out.println("Invincible commence.");
+            System.out.println("Invincible début.");
         }
     }
 

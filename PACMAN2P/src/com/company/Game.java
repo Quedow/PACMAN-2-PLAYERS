@@ -1,3 +1,6 @@
+/*
+PACMAN2P - MAMMA Quentin & LUQUET Steven - A21
+ */
 package com.company;
 
 import java.io.IOException;
@@ -10,60 +13,60 @@ import java.util.List;
 
 public class Game {
 
-    private int colonnes;
-    private int lignes;
-    private int [][] matriceMap;
-    private List<String> lines;
+    private int columns;
+    private int lines;
+    private int [][] matrixMap;
+    private List<String> textLines;
 
     private ArrayList<Player> players;
-    private ArrayList<Ennemy> ennemies;
+    private ArrayList<Enemy> enemies;
     private int numberJ;
     private int numberE;
 
     public Game(){
         numberJ = 2;
         numberE = 4;
-        lines = new ArrayList<String>();
+        textLines = new ArrayList<String>();
         players = new ArrayList<Player>();
-        ennemies = new ArrayList<Ennemy>();
+        enemies = new ArrayList<Enemy>();
 
         readMapFile();
-        createMatriceMap();
+        createMatrixMap();
     }
 
     // Initialize Game
 
-    public void readMapFile(){
+    private void readMapFile(){
         Path path = Paths.get("PACMAN_MAP.txt");
         System.out.println("Fichier trouvé : " + Files.exists(path));
         try {
-            lines = Files.readAllLines(path);
+            textLines = Files.readAllLines(path);
         } catch (IOException ignored) {}
 
-        colonnes = lines.get(0).length();
-        lignes = lines.size();
+        columns = textLines.get(0).length();
+        lines = textLines.size();
     }
 
-    public void createMatriceMap(){
-        matriceMap = new int[lignes][colonnes];
+    private void createMatrixMap(){
+        matrixMap = new int[lines][columns];
 
-        for(int L = 0; L < lignes; L++ ){
-            for(int C = 0; C < colonnes; C++) {
+        for(int L = 0; L < lines; L++ ){
+            for(int C = 0; C < columns; C++) {
                 try {
-                    matriceMap[L][C] = Integer.parseInt(lines.get(L).substring(C,C+1));
+                    matrixMap[L][C] = Integer.parseInt(textLines.get(L).substring(C,C+1));
                 }catch (Exception exception){
-                    matriceMap[L][C] = 1;
+                    matrixMap[L][C] = 1;
                 }
             }
         }
-        showMatriceMap();
+        showMatrixMap();
     }
 
-    public void showMatriceMap(){
+    private void showMatrixMap(){
         System.out.println("Matrice Map générée :");
-        for(int L = 0; L < lignes; L++ ){
-            for(int C = 0; C < colonnes; C++) {
-                System.out.print(matriceMap[L][C]+" ");
+        for(int L = 0; L < lines; L++ ){
+            for(int C = 0; C < columns; C++) {
+                System.out.print(matrixMap[L][C]+" ");
             }
             System.out.println();
         }
@@ -72,12 +75,12 @@ public class Game {
     public void setNumberJ(int nJ) {
         numberJ=nJ;
         initializePlayer();
-        initializeEnnemy();
+        initializeEnemy();
     }
 
     public void setNumberE(int nE) { numberE = nE; }
 
-    public void initializePlayer(){
+    private void initializePlayer(){
         for (int nJ = 0; nJ < numberJ; nJ++) {
             players.add(new Player());
             int[] couple = findSpecificPosition(2);
@@ -85,50 +88,48 @@ public class Game {
         }
     }
 
-    public void initializeEnnemy(){
+    private void initializeEnemy(){
         for (int nE = 0; nE < numberE; nE++) {
-            ennemies.add(new Ennemy(numberJ));
+            enemies.add(new Enemy(numberJ));
             int[] couple = findSpecificPosition(0);
-            ennemies.get(nE).setPosition(couple[0], couple[1]);
+            enemies.get(nE).setPosition(couple[0], couple[1]);
         }
     }
 
-    public int[] findSpecificPosition(int statZone){
+    private int[] findSpecificPosition(int statZone){
         int L,C;
         do{
-            L = randomValue(0, lignes-1);
-            C = randomValue(0, colonnes-1);
+            L = randomValue(0, lines -1);
+            C = randomValue(0, columns -1);
         }while (statZone(L,C) != statZone);
         return new int[]{C, L};
     }
 
-    // Move and teleport player or ennemy
+    // Move and teleport player or enemy
 
     public int[] movePlayer(int x, int y, int nJ){
         players.get(nJ).moveEntity(x,y);
         removeScoreBalls(nJ);
-        return new int[]{ players.get(nJ).getCentity(), players.get(nJ).getLentity()};
+        return new int[]{ players.get(nJ).getCEntity(), players.get(nJ).getLEntity()};
     }
 
-    public int[] moveEnnemy(int x, int y, int nE){
-        ennemies.get(nE).moveEntity(x,y);
-        return new int[]{ ennemies.get(nE).getCentity(), ennemies.get(nE).getLentity()};
+    public int[] moveEnemy(int x, int y, int nE){
+        enemies.get(nE).moveEntity(x,y);
+        return new int[]{ enemies.get(nE).getCEntity(), enemies.get(nE).getLEntity()};
     }
 
-    public int[] findEnnemyDirection(int nE) {
-        return ennemies.get(nE).findEnnemyDirection(matriceMap, players.get(ennemies.get(nE).getPrefTarget()).Centity, players.get(ennemies.get(nE).getPrefTarget()).Lentity);
+    public int[] findEnemyDirection(int nE) {
+        return enemies.get(nE).findEnemyDirection(matrixMap, players.get(enemies.get(nE).getPrefTarget()).CEntity, players.get(enemies.get(nE).getPrefTarget()).LEntity);
     }
 
-    public int[] tp(int Centity, int Lentity){
+    public int[] tp(int CEntity, int LEntity){
         HashMap<Integer, Integer> locateExits = new HashMap<Integer, Integer>();
-        System.out.println("Les sorties possibles :");
-        for (int L=0;L<lignes;L++){
-            for (int C=0;C<colonnes;C++){
-                if((C==0 || C==colonnes-1 || L==0 || L==lignes-1)
-                        && (matriceMap[L][C]==2 || matriceMap[L][C]==3 || matriceMap[L][C]==4)
-                        && (C!= Centity || L!= Lentity)){
+        for (int L = 0; L< lines; L++){
+            for (int C = 0; C< columns; C++){
+                if((C==0 || C== columns -1 || L==0 || L== lines -1)
+                        && (matrixMap[L][C]==2 || matrixMap[L][C]==3 || matrixMap[L][C]==4)
+                        && (C!= CEntity || L!= LEntity)){
                     locateExits.put(C,L);
-                    System.out.println("Key : "+C+" valeur : "+L);
                 }
             }
         }
@@ -151,50 +152,55 @@ public class Game {
         return tpPosition;
     }
 
-    public void tpEnnemy(int nE, int[] tpPosition){
+    private void tpEnemy(int nE, int[] tpPosition){
         if (tpPosition.length != 0){
-            ennemies.get(nE).setPosition(tpPosition[0],tpPosition[1]);
+            enemies.get(nE).setPosition(tpPosition[0],tpPosition[1]);
         }
     }
 
     public void removeScoreBalls(int nJ){
-        if (matriceMap[players.get(nJ).getLentity()][players.get(nJ).getCentity()]==2){
+        if (matrixMap[players.get(nJ).getLEntity()][players.get(nJ).getCEntity()]==2){
             players.get(nJ).incrementScore(10);
-            matriceMap[players.get(nJ).getLentity()][players.get(nJ).getCentity()]=3;
+            matrixMap[players.get(nJ).getLEntity()][players.get(nJ).getCEntity()]=3;
         }
-        else if (matriceMap[players.get(nJ).getLentity()][players.get(nJ).getCentity()]==4){
+        else if (matrixMap[players.get(nJ).getLEntity()][players.get(nJ).getCEntity()]==4){
             players.get(nJ).randomPowerUp();
-            matriceMap[players.get(nJ).getLentity()][players.get(nJ).getCentity()]=3;
+            matrixMap[players.get(nJ).getLEntity()][players.get(nJ).getCEntity()]=3;
         }
     }
 
     // Gestion des collisions
 
-    public void collisionPlayer(){ //À voir si on la garde
+    public boolean collisionPlayer(){
         for (int i = 0; i < numberJ; i++) {
             for (int j = 0; j < numberJ; j++) {
                 if (getLplayer(i) == getLplayer(j) && getCplayer(i)==getCplayer(j) && i!=j){
                     players.get(i).looseLife();
+                    return true;
                 }
             }
         }
+        return false;
     }
 
-    public void collisionEnnemy(){
-        try {
-            for (int nJ = 0; nJ < numberJ; nJ++) {
-                for (int nE = 0; nE < numberE; nE++) {
-                    if (getLplayer(nJ) == getLennemy(nE) && getCplayer(nJ)==getCennemy(nE)){
-                        players.get(nJ).looseLife();
-                        if (players.get(nJ).isBerseker()){
-                            int[] couple = findSpecificPosition(0);
-                            tpEnnemy(nE, new int[]{couple[0], couple[1]});
-                            players.get(nJ).incrementScore(400);
-                        }
+    public boolean collisionEnemy(){
+        //try {
+        for (int nJ = 0; nJ < numberJ; nJ++) {
+            for (int nE = 0; nE < numberE; nE++) {
+                if (getLplayer(nJ) == getLEnemy(nE) && getCplayer(nJ) == getCEnemy(nE)){
+                    players.get(nJ).looseLife();
+                    if (players.get(nJ).isBerseker()){
+                        int[] couple = findSpecificPosition(0);
+                        tpEnemy(nE, new int[]{couple[0], couple[1]});
+                        players.get(nJ).incrementScore(400);
+                        return false;
                     }
+                    return true;
                 }
             }
-        }catch (Exception ignored){}
+        }
+        //}catch (Exception ignored){}
+        return false;
     }
 
     // Gestion de fin de partie
@@ -206,11 +212,11 @@ public class Game {
         return counterScoreBalls() == 0 || nAlive() <= 1;
     }
 
-    public int counterScoreBalls(){
+    private int counterScoreBalls(){
         int numberScoreBall = 0;
-        for(int L = 0; L < lignes; L++ ){
-            for(int C = 0; C < colonnes; C++) {
-                if (matriceMap[L][C] == 2){
+        for(int L = 0; L < lines; L++ ){
+            for(int C = 0; C < columns; C++) {
+                if (matrixMap[L][C] == 2){
                     numberScoreBall++;
                 }
             }
@@ -218,7 +224,7 @@ public class Game {
         return numberScoreBall;
     }
 
-    public int nAlive(){
+    private int nAlive(){
         int alive = 0;
         for (int i = 0; i < numberJ; i++) {
             if (players.get(i).getLife() > 0){
@@ -244,9 +250,9 @@ public class Game {
 
     public int walkable(int x, int y, int nJ){
         try {
-            if(matriceMap[getLplayer(nJ)+y][getCplayer(nJ)+x]==2
-                    || matriceMap[getLplayer(nJ)+y][getCplayer(nJ)+x]==3
-                        || matriceMap[getLplayer(nJ)+y][getCplayer(nJ)+x]==4){
+            if(matrixMap[getLplayer(nJ)+y][getCplayer(nJ)+x]==2
+                    || matrixMap[getLplayer(nJ)+y][getCplayer(nJ)+x]==3
+                        || matrixMap[getLplayer(nJ)+y][getCplayer(nJ)+x]==4){
                 return 1;
             }
             else {
@@ -257,7 +263,7 @@ public class Game {
         }
     }
 
-    public int statZone(int L, int C){ return matriceMap[L][C]; }
+    public int statZone(int L, int C){ return matrixMap[L][C]; }
 
     public int getNumberBerseker(){
         int nB = 0;
@@ -279,27 +285,27 @@ public class Game {
 
     public int getLife(int nJ){ return players.get(nJ).getLife(); }
 
-    public int getCplayer(int nJ){ return players.get(nJ).getCentity(); }
+    public int getCplayer(int nJ){ return players.get(nJ).getCEntity(); }
 
-    public int getLplayer(int nJ){ return players.get(nJ).getLentity(); }
+    public int getLplayer(int nJ){ return players.get(nJ).getLEntity(); }
 
     public void incrementBersekerTime(int nJ) { players.get(nJ).incrementBersekerTime(); }
 
     public void incrementInvincibleTime(int nJ) { players.get(nJ).incrementInvincibleTime(); }
 
-    //Get and Update data to "Ennemy"
+    //Get and Update data to "Enemy"
 
-    public int getCennemy(int nJ){ return ennemies.get(nJ).getCentity(); }
+    public int getCEnemy(int nJ){ return enemies.get(nJ).getCEntity(); }
 
-    public int getLennemy(int nJ){ return ennemies.get(nJ).getLentity(); }
+    public int getLEnemy(int nJ){ return enemies.get(nJ).getLEntity(); }
 
     //Send data
 
-    public int getColonnes() { return colonnes; }
+    public int getColumns() { return columns; }
 
-    public int getLignes() { return lignes; }
+    public int getLines() { return lines; }
 
-    public int setTaillePixel(int hauteur) { return hauteur/lignes-1; }
+    public int setTaillePixel(int hauteur) { return hauteur/ lines -1; }
 
     public int getNumberJ() { return numberJ; }
 

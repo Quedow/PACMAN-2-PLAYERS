@@ -1,3 +1,6 @@
+/*
+PACMAN2P - MAMMA Quentin & LUQUET Steven - A21
+ */
 package com.company;
 
 import javafx.application.Application;

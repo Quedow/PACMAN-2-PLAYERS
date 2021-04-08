@@ -1,3 +1,6 @@
+/*
+PACMAN2P - MAMMA Quentin & LUQUET Steven - A21
+ */
 package com.company;
 
 public class Main {
@@ -8,6 +11,6 @@ public class Main {
         Presentation presentation = new Presentation(game);
         Vue vue = new Vue(presentation);
 
-        presentation.associerVue(vue);
+        presentation.associateVue(vue);
     }
 }
