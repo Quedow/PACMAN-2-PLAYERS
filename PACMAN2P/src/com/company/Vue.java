@@ -34,6 +34,7 @@ public class Vue {
     private final int taillePixel;
     private boolean statBerseker;
     private int[][] memoryStats;
+    private int counter;
 
     private ArrayList<ImageView> imagePlayers;
     private ArrayList<ImageView> imageGhosts;
@@ -60,8 +61,11 @@ public class Vue {
     public Vue(Presentation presentation)
     {
         this.presentation = presentation;
+
+        //Gestion en mémoire de précédentes valeurs
         memoryStats = new int[2][2];
         statBerseker = false;
+        counter = 0;
 
         Screen screen = Screen.getPrimary();
         longueur = (int) screen.getBounds().getWidth(); //Recupère la longueur de l'écran du PC
@@ -239,6 +243,7 @@ public class Vue {
         }
     }
 
+
     private void drawStatsLabel() {
         labels = new ArrayList<Label>();
 
@@ -269,23 +274,32 @@ public class Vue {
         removeScoreBalls(nJ);
     }
 
+    public boolean incrementCounter(){
+        counter++;
+        return (counter==0 || counter >= 30);
+    }
+
     public void updateViewElements(int nJ, boolean collisionPlayer, boolean collisionEnemy, int numberBerseker){
-        if (!left.getStyle().equals("-fx-background-color: BLACK")){
+        boolean counterTime = incrementCounter();
+        if (!left.getStyle().equals("-fx-background-color: BLACK") && counterTime){
             left.setStyle("-fx-background-color: BLACK");
             right.setStyle("-fx-background-color: BLACK");
-            System.out.println("0");
+            counter=0;
         }
-        else if (collisionPlayer || collisionEnemy){
+        else if ((collisionPlayer || collisionEnemy) && counterTime){
             left.setStyle("-fx-background-color: RED");
             right.setStyle("-fx-background-color: RED");
+            counter=0;
         }
-        else if (memoryStats[nJ][1] < getLife(nJ)){
+        else if (memoryStats[nJ][1] < getLife(nJ) && counterTime){
             left.setStyle("-fx-background-color: GREEN");
             right.setStyle("-fx-background-color: GREEN");
+            counter=0;
         }
-        else if (getScore(nJ)- memoryStats[nJ][0]==300){
+        else if (getScore(nJ)- memoryStats[nJ][0]==300 && counterTime){
             left.setStyle("-fx-background-color: YELLOW");
             right.setStyle("-fx-background-color: YELLOW");
+            counter=0;
         }
 
         if (numberBerseker == 0 && statBerseker){
