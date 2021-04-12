@@ -7,12 +7,12 @@ Si vous souhaitez regarder ou modifier le code source celui-ci est disponible so
 
 # Fonctionnalités :
 1. Vous avez la possibilité de personnaliser la map.
-2. Vous pouvez télécharger des skins sur internet pour personnaliser votre jeu (.gif pour le joueur classique et .png pour le joueur berseker et les ennemies). Les noms des images doivent impérativement rester le même que l'original.
-3. Dans le menu principal, vous pouvez choisir de jouer à 1 ou 2 joueurs ainsi que le nombre d'ennemies.
+2. Vous pouvez télécharger des skins sur internet pour personnaliser votre jeu (.gif pour le joueur classique et .png pour le joueur berseker et les ennemis). Les noms des images doivent impérativement rester le même que l'original.
+3. Dans le menu principal, vous pouvez choisir de jouer à 1 ou 2 joueurs ainsi que le nombre d'ennemis.
 
 # Règle de création d'une Map :
 Afin de créer votre map vous devez créer un fichier texte qui portera le nom du fichier contenant la map de base "PACMAN_MAP.txt". Je vous conseille de conserver la map de base soit sous un autre nom ou dans un autre dossier afin de pouvoir la récupérer à tout moment. Lorsque vous commencerez à composer votre map, vous devrez respecter le code suivant :
-- Mettre un "0" pour le spawn des ennemies (obligatoire),
+- Mettre un "0" pour le spawn des ennemis (obligatoire),
 - Mettre un "1" pour les murs,
 - Mettre un "2" pour les chemins contenant une bille de score,
 - Mettre un "3" pour les chemins vides,
