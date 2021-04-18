@@ -1,25 +1,25 @@
 # PACMAN-2-PLAYERS
-# Introduction :
-C'est dans le cadre d'un projet scolaire (en duo) de 2ème année d'école d'ingénieurs que nous nous sommes lancé dans la programmation d'un Pac-Man jouable à 2 joueurs sur le même ordinateur. Il reprend les mêmes mécaniques que le Pac-Man classique à la différence que dans celui-ci, il faudra faire attention aux collisions entre joueurs qui font perdre des vies, au bonus qui ne transforme pas obligatoirement le joueur en mode berseker mais qui peut aussi donner une vie supplémentaire ou un bonus de score. Les différentes sorties de map ne mènent pas obligatoirement à la sortie opposée : c'est alátoire.
+# Introduction:
+It's as part of a school project (in duo) of 2nd year of engineering school that we started programming a Pac-Man playable with 2 players on a same computer. It uses the same gameplay as the classic Pac-Man with some differences. You would pay attention to the collisions between players which cause loss of life, to the bonus which does not necessarily transform players into berserker mode, but which can also give an extra life or a score bonus. Different exits of the map don’t necessarily lead to the opposite exit: it’s random.
 
-# À disposition :
-Si vous souhaitez regarder ou modifier le code source celui-ci est disponible sous le nom de dossier "PACMAN2P". Le jeu a été codé en JavaFx sur Intellij. Si vous souhaitez uniquement jouer au jeu, il vous suffit de télécharger uniquement le dossier "PACMAN2P (build)".
+# Available:
+If you wish to view or modify the source code it is available under the folder name "PACMAN2P". The game was coded in JavaFx on IntelliJ. If you only want to play, you just need to download the "PACMAN2P (build)" folder only.
 
-# Fonctionnalités :
-1. Vous avez la possibilité de personnaliser la map.
-2. Vous pouvez télécharger des skins sur internet pour personnaliser votre jeu (.gif pour le joueur classique et .png pour le joueur berseker et les ennemis). Les noms des images doivent impérativement rester le même que l'original.
-3. Dans le menu principal, vous pouvez choisir de jouer à 1 ou 2 joueurs ainsi que le nombre d'ennemis.
+# Features:
+1. You have the option to customize the map.
+2. You can download skins from the internet to customize your game (.gif for the classic player and .png for the berserker player and enemies). The names of the images must remain the same as the original.
+3. In the main menu, you can choose to play with 1 or 2 players as well as the number of enemies.
 
-# Règle de création d'une Map :
-Afin de créer votre map vous devez créer un fichier texte qui portera le nom du fichier contenant la map de base "PACMAN_MAP.txt". Je vous conseille de conserver la map de base soit sous un autre nom ou dans un autre dossier afin de pouvoir la récupérer à tout moment. Lorsque vous commencerez à composer votre map, vous devrez respecter le code suivant :
-- Mettre un "0" pour le spawn des ennemis (obligatoire),
-- Mettre un "1" pour les murs,
-- Mettre un "2" pour les chemins contenant une bille de score,
-- Mettre un "3" pour les chemins vides,
-- Mettre un "4" pour les chemins contenant un bonus.
+# Rule for creating a Map:
+To create your map, you must create a text file which will have the same name of the file containing the basic map: "PACMAN_MAP.txt". I advise you to keep the basic map either under another name or in another folder so you can recover it at any time. When you start to compose your map, you will have to respect the following code:
+- Put a "0" for the spawn of enemies (compulsory),
+- Put a "1" for the walls,
+- Put a "2" for the paths containing a score ball,
+- Put a "3" for empty paths,
+- Put a "4" for the paths containing a bonus.
 
-# Les bonus :
-Il y aura 3 types de bonus qui seront générés aléatoirement selon des probabilités prédéfinies :
-- Mode berserk : 3/5;
-- Une vie supplémentaire : 1/5;
-- 200 points de score supplémentaires : 1/5.
+# Bonuses:
+There will be 3 types of bonus which will be generated randomly according to predefined probabilities:
+- Berserk mode: 3/5.
+- An extra life: 1/5.
+- 200 additional score points: 1/5.
