@@ -12,9 +12,9 @@ If you wish to view or modify the source code it is available under the folder n
 
 # Rule for creating a Map:
 To create your map, you must create a text file which will have the same name of the file containing the basic map: "PACMAN_MAP.txt". I advise you to keep the basic map either under another name or in another folder so you can recover it at any time. When you start to compose your map, you will have to respect the following code:
-- Put a "0" for the spawn of enemies (compulsory),
-- Put a "1" for the walls,
-- Put a "2" for the paths containing a score ball,
+- Put a "0" for enemies spawns (compulsory),
+- Put a "1" for walls,
+- Put a "2" for paths containing a score ball,
 - Put a "3" for empty paths,
 - Put a "4" for the paths containing a bonus.
 
