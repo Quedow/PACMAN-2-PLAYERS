@@ -1,6 +1,6 @@
 # PACMAN-2-PLAYERS
 # Introduction:
-It's as part of a school project (in duo) of 2nd year of engineering school that we started programming a Pac-Man playable with 2 players on a same computer. It uses the same gameplay as the classic Pac-Man with some differences. You would pay attention to the collisions between players which cause loss of life, to the bonus which does not necessarily transform players into berserker mode, but which can also give an extra life or a score bonus. Different exits of the map don’t necessarily lead to the opposite exit: it’s random.
+It's as part of a school project (in duo) of 2nd year of engineering school that we started programming a Pac-Man playable with 2 players on a same computer. It uses the same gameplay as the classic Pac-Man with some differences. You would pay attention to collisions between players which cause loss of life, to bonuses which does not necessarily transform players into berserker mode, but which can also give an extra life or a score bonus. The different exits of the map don’t necessarily lead to the opposite exit: it’s random.
 
 # Available:
 If you wish to view or modify the source code it is available under the folder name "PACMAN2P". The game was coded in JavaFx on IntelliJ. If you only want to play, you just need to download the "PACMAN2P (build)" folder only.
