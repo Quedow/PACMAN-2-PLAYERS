@@ -85,6 +85,7 @@ public class Game {
             players.add(new Player());
             int[] couple = findSpecificPosition(2);
             players.get(nJ).setPosition(couple[0], couple[1]);
+            removeScoreBalls(nJ);
         }
     }
 
@@ -189,7 +190,7 @@ public class Game {
             for (int nE = 0; nE < numberE; nE++) {
                 if (getLplayer(nJ) == getLEnemy(nE) && getCplayer(nJ) == getCEnemy(nE)){
                     players.get(nJ).looseLife();
-                    if (players.get(nJ).isBerseker()){
+                    if (players.get(nJ).isBerserker()){
                         int[] couple = findSpecificPosition(0);
                         tpEnemy(nE, new int[]{couple[0], couple[1]});
                         players.get(nJ).incrementScore(400);
@@ -265,10 +266,10 @@ public class Game {
 
     public int statZone(int L, int C){ return matrixMap[L][C]; }
 
-    public int getNumberBerseker(){
+    public int getNumberBerserker(){
         int nB = 0;
         for (int nJ = 0; nJ < getNumberJ(); nJ++) {
-            if (getPlayerBerseker(nJ)){
+            if (getPlayerBerserker(nJ)){
                 nB++;
             }
         }
@@ -289,7 +290,7 @@ public class Game {
 
     public int getLplayer(int nJ){ return players.get(nJ).getLEntity(); }
 
-    public void incrementBersekerTime(int nJ) { players.get(nJ).incrementBersekerTime(); }
+    public void incrementBerserkerTime(int nJ) { players.get(nJ).incrementBerserkerTime(); }
 
     public void incrementInvincibleTime(int nJ) { players.get(nJ).incrementInvincibleTime(); }
 
@@ -311,5 +312,5 @@ public class Game {
 
     public int getNumberE() { return numberE; }
 
-    public boolean getPlayerBerseker(int nJ){ return players.get(nJ).isBerseker(); }
+    public boolean getPlayerBerserker(int nJ){ return players.get(nJ).isBerserker(); }
 }

@@ -40,14 +40,14 @@ public class Presentation implements EventHandler<KeyEvent> {
 
     private void initializeKey() {
         if (game.getNumberJ()==2){
-            keyEvents.put(KeyCode.W, new KeyFrame(Duration.millis(pacmanSpeed), e -> moveType(0, -1, 1)));
+            keyEvents.put(KeyCode.Z, new KeyFrame(Duration.millis(pacmanSpeed), e -> moveType(0, -1, 1)));
             keyEvents.put(KeyCode.S, new KeyFrame(Duration.millis(pacmanSpeed), e -> moveType(0, 1, 1)));
-            keyEvents.put(KeyCode.A, new KeyFrame(Duration.millis(pacmanSpeed), e -> moveType(-1, 0, 1)));
+            keyEvents.put(KeyCode.Q, new KeyFrame(Duration.millis(pacmanSpeed), e -> moveType(-1, 0, 1)));
             keyEvents.put(KeyCode.D, new KeyFrame(Duration.millis(pacmanSpeed), e -> moveType(1, 0, 1)));
 
-            keyRef.put(KeyCode.W, 1);
+            keyRef.put(KeyCode.Z, 1);
             keyRef.put(KeyCode.S, 1);
-            keyRef.put(KeyCode.A, 1);
+            keyRef.put(KeyCode.Q, 1);
             keyRef.put(KeyCode.D, 1);
         }
         keyEvents.put(KeyCode.UP, new KeyFrame(Duration.millis(pacmanSpeed), e -> moveType(0, -1,0)));
@@ -110,9 +110,9 @@ public class Presentation implements EventHandler<KeyEvent> {
                 checkoutRoutine();
                 if(timePerSec % 60 == 1) {
                     for (int nJ = 0; nJ < getNumberJ(); nJ++) {
-                        game.incrementBersekerTime(nJ);
+                        game.incrementBerserkerTime(nJ);
                         game.incrementInvincibleTime(nJ);
-                        vue.updatePlayerSkin(nJ, game.getPlayerBerseker(nJ));
+                        vue.updatePlayerSkin(nJ, game.getPlayerBerserker(nJ));
                     }
                 }
             }
@@ -122,7 +122,7 @@ public class Presentation implements EventHandler<KeyEvent> {
 
     private void checkoutRoutine(){
         for (int nJ = 0; nJ < getNumberJ(); nJ++) {
-            vue.updateViewElements(nJ, game.collisionPlayer(), game.collisionEnemy(), game.getNumberBerseker());
+            vue.updateViewElements(nJ, game.collisionPlayer(), game.collisionEnemy(), game.getNumberBerserker());
         }
         if (game.winCondition()){
             timeline.stop();

@@ -32,7 +32,7 @@ public class Vue {
     private final int longueur;
     private final int hauteur;
     private final int taillePixel;
-    private boolean statBerseker;
+    private boolean statBerserker;
     private int[][] memoryStats;
     private int counter;
 
@@ -64,7 +64,7 @@ public class Vue {
 
         //Gestion en mémoire de précédentes valeurs
         memoryStats = new int[2][2];
-        statBerseker = false;
+        statBerserker = false;
         counter = 0;
 
         Screen screen = Screen.getPrimary();
@@ -204,11 +204,11 @@ public class Vue {
     }
 
     private void initializeEntities(int nJ){
-        stage.setScene(sceneGame);
         presentation.setNumberJ(nJ);
         drawPlayer();
         drawEnemies();
         drawStatsLabel();
+        stage.setScene(sceneGame);
     }
 
     private void drawPlayer() {
@@ -279,7 +279,7 @@ public class Vue {
         return (counter==0 || counter >= 30);
     }
 
-    public void updateViewElements(int nJ, boolean collisionPlayer, boolean collisionEnemy, int numberBerseker){
+    public void updateViewElements(int nJ, boolean collisionPlayer, boolean collisionEnemy, int numberBerserker){
         boolean counterTime = incrementCounter();
         if (!left.getStyle().equals("-fx-background-color: BLACK") && counterTime){
             left.setStyle("-fx-background-color: BLACK");
@@ -302,17 +302,17 @@ public class Vue {
             counter=0;
         }
 
-        if (numberBerseker == 0 && statBerseker){
+        if (numberBerserker == 0 && statBerserker){
             for (int nE = 0; nE < getNumberE(); nE++) {
                 imageGhosts.get(nE).setImage(new Image(new File("ghost.png").toURI().toString()));
             }
-            statBerseker = false;
+            statBerserker = false;
         }
-        else if (numberBerseker > 0 && !statBerseker){
+        else if (numberBerserker > 0 && !statBerserker){
             for (int nE = 0; nE < getNumberE(); nE++) {
                 imageGhosts.get(nE).setImage(new Image(new File("ghost_2.png").toURI().toString()));
             }
-            statBerseker = true;
+            statBerserker = true;
         }
         labels.get(nJ).setText("Player score "+(nJ+1)+" : "+getScore(nJ)+"\n"+"Player life "+(nJ+1)+" : "+getLife(nJ));
 
@@ -320,11 +320,11 @@ public class Vue {
         memoryStats[nJ][1]=getLife(nJ);
     }
 
-    public void updatePlayerSkin(int nJ, boolean playerBerseker) {
-        if (!playerBerseker){
+    public void updatePlayerSkin(int nJ, boolean playerBerserker) {
+        if (!playerBerserker){
             imagePlayers.get(nJ).setImage(new Image(new File("pacman.gif").toURI().toString()));
         }else{
-            imagePlayers.get(nJ).setImage(new Image(new File("pacman_berseker.png").toURI().toString()));
+            imagePlayers.get(nJ).setImage(new Image(new File("pacman_berserker.png").toURI().toString()));
         }
     }
 

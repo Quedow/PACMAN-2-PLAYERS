@@ -7,8 +7,8 @@ public class Player extends Entity {
 
     private int score;
     private int life;
-    private boolean berseker;
-    private int bersekerTime;
+    private boolean berserker;
+    private int berserkerTime;
     private boolean invincible;
     private int invincibleTime;
 
@@ -18,8 +18,8 @@ public class Player extends Entity {
         score=0;
         life=3;
 
-        berseker = false;
-        bersekerTime = 0;
+        berserker = false;
+        berserkerTime = 0;
         invincible = false;
         invincibleTime = 0;
     }
@@ -29,7 +29,7 @@ public class Player extends Entity {
         int value = randomValue(1, 5);
         switch (value){
             case 1: case 2: case 3:
-                bersekerMode();
+                berserkerMode();
             break;
             case 4:
                 incrementScore(200);
@@ -40,18 +40,18 @@ public class Player extends Entity {
         }
     }
 
-    private void bersekerMode(){
-        berseker = true;
-        System.out.println("Berseker début.");
+    private void berserkerMode(){
+        berserker = true;
+        System.out.println("Berserker début.");
     }
 
-    public void incrementBersekerTime(){
-        if (berseker){
-            bersekerTime++;
-            if (bersekerTime >= 10){ //10 car cette methode s'effectue 1 fois/s
-                berseker = false;
-                bersekerTime = 0;
-                System.out.println("Berseker fin.");
+    public void incrementBerserkerTime(){
+        if (berserker){
+            berserkerTime++;
+            if (berserkerTime >= 10){ //10 car cette methode s'effectue 1 fois/s
+                berserker = false;
+                berserkerTime = 0;
+                System.out.println("Berserker fin.");
             }
         }
     }
@@ -68,7 +68,7 @@ public class Player extends Entity {
     }
 
     public void looseLife(){
-        if (!berseker && !invincible){
+        if (!berserker && !invincible){
             life--;
             invincible = true;
             System.out.println("Invincible début.");
@@ -79,7 +79,7 @@ public class Player extends Entity {
         score+=scoreValue;
     }
 
-    public boolean isBerseker(){ return berseker; }
+    public boolean isBerserker(){ return berserker; }
 
     public int getLife(){ return life; }
 
