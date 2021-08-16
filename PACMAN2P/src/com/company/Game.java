@@ -35,7 +35,7 @@ public class Game {
 
     private void readMapFile(){
         Path path = Paths.get("PACMAN_MAP.txt");
-        System.out.println("Fichier trouvé : " + Files.exists(path));
+        System.out.println("File find : " + Files.exists(path));
         try {
             textLines = Files.readAllLines(path);
         } catch (IOException ignored) {}
@@ -60,7 +60,7 @@ public class Game {
     }
 
     private void showMatrixMap(){
-        System.out.println("Matrice Map générée :");
+        System.out.println("Matrix Map generated :");
         for(int L = 0; L < lines; L++ ){
             for(int C = 0; C < columns; C++) {
                 System.out.print(matrixMap[L][C]+" ");
@@ -167,7 +167,7 @@ public class Game {
         }
     }
 
-    // Gestion des collisions
+    // Collisions management
 
     public boolean collisionPlayer(){
         for (int i = 0; i < numberJ; i++) {
@@ -201,7 +201,7 @@ public class Game {
         return false;
     }
 
-    // Gestion de fin de partie
+    // End game management
 
     public boolean winCondition(){
         if (numberJ == 1){
@@ -244,7 +244,7 @@ public class Game {
         return winner;
     }
 
-    // Indicateur d'état ou de valeur d'un lieu précis de la map
+    // Stat map place indicator
 
     public int walkable(int x, int y, int nJ){
         try {
@@ -273,7 +273,7 @@ public class Game {
         return nB;
     }
 
-    // Autres méthodes
+    // Other methods
 
     public int randomValue(int borneInf, int borneSup){ return (int)(Math.random() * ((borneSup - borneInf) + 1)) + borneInf; }
 
@@ -303,7 +303,7 @@ public class Game {
 
     public int getLines() { return lines; }
 
-    public int setTaillePixel(int hauteur) { return hauteur/ lines -1; }
+    public int setPixelSize(int yScreen) { return yScreen/lines-1; }
 
     public int getNumberJ() { return numberJ; }
 

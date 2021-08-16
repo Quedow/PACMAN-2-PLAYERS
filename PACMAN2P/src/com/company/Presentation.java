@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class Presentation implements EventHandler<KeyEvent> {
 
     private Game game;
-    private Vue vue;
+    private Vew vew;
     private Timeline timeline;
     private HashMap<KeyCode, KeyFrame> keyEvents;
     private HashMap<KeyCode, Integer> keyRef;
@@ -27,9 +27,9 @@ public class Presentation implements EventHandler<KeyEvent> {
         timePerSec = 0;
         pacmanSpeed = 200;
 
-        keyRef = new HashMap<KeyCode, Integer>(); //touche de clavier - numéro du joueur
-        keyEvents = new HashMap<KeyCode, KeyFrame>(); //lien touche de clavier - animation
-        keyInProcess = new HashMap<Integer, KeyFrame>(); //animation/joueur en cours d'exécution
+        keyRef = new HashMap<KeyCode, Integer>(); //keyboard - player number
+        keyEvents = new HashMap<KeyCode, KeyFrame>(); //link keyboard - animation
+        keyInProcess = new HashMap<Integer, KeyFrame>(); //animation/player in execution
 
         timeline = new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
@@ -64,7 +64,7 @@ public class Presentation implements EventHandler<KeyEvent> {
         }
 
         if (event.getCode() == KeyCode.F1){
-            vue.stageSize();
+            vew.stageSize();
         }
 
         if (event.getCode() == KeyCode.ESCAPE){
@@ -72,23 +72,23 @@ public class Presentation implements EventHandler<KeyEvent> {
         }
     }
 
-    // Events and time gestion
+    // Events and time management
 
     private void timeLineProcess(KeyCode keyCode){
-        timeline.stop();    //On stoppe toutes les animations
-        timeline.getKeyFrames().remove(keyInProcess.get(keyRef.get(keyCode))); //On retire l'animation associée au joueur qui clique
-        keyInProcess.put(keyRef.get(keyCode), keyEvents.get(keyCode)); //On met à jour l'animation en cours
-        timeline.getKeyFrames().add(keyInProcess.get(keyRef.get(keyCode))); //On ajoute dans la timeline l'animation mise à jour
-        timeline.play(); //On lance l'animation
+        timeline.stop();    //We stop all animations
+        timeline.getKeyFrames().remove(keyInProcess.get(keyRef.get(keyCode))); //We remove the animation associated to clicking player
+        keyInProcess.put(keyRef.get(keyCode), keyEvents.get(keyCode)); //We update the current animation
+        timeline.getKeyFrames().add(keyInProcess.get(keyRef.get(keyCode))); // We add in timeline the updated animation
+        timeline.play(); //We start the animation
     }
 
     private void moveType(int x, int y, int nJ){
         switch(game.walkable(x,y,nJ)){
             case 1:
-                vue.updatePlayerPosition(nJ, game.movePlayer(x,y,nJ), new int[]{x,y});
+                vew.updatePlayerPosition(nJ, game.movePlayer(x,y,nJ), new int[]{x,y});
                 break;
             case 2:
-                vue.updatePlayerPosition(nJ, game.tpPlayer(nJ, game.tp(getCPlayer(nJ), getLPlayer(nJ))), new int[]{x,y});
+                vew.updatePlayerPosition(nJ, game.tpPlayer(nJ, game.tp(getCPlayer(nJ), getLPlayer(nJ))), new int[]{x,y});
                 break;
         }
     }
@@ -101,7 +101,7 @@ public class Presentation implements EventHandler<KeyEvent> {
                 if(timePerSec % 20 == 1) {
                     for (int nE = 0; nE < getNumberE(); nE++) {
                         int[] couple = game.findEnemyDirection(nE);
-                        vue.updateEnemyPosition(nE, game.moveEnemy(couple[0], couple[1], nE));
+                        vew.updateEnemyPosition(nE, game.moveEnemy(couple[0], couple[1], nE));
                     }
                 }
                 checkoutRoutine();
@@ -109,7 +109,7 @@ public class Presentation implements EventHandler<KeyEvent> {
                     for (int nJ = 0; nJ < getNumberJ(); nJ++) {
                         game.incrementBerserkerTime(nJ);
                         game.incrementInvincibleTime(nJ);
-                        vue.updatePlayerSkin(nJ, game.getPlayerBerserker(nJ));
+                        vew.updatePlayerSkin(nJ, game.getPlayerBerserker(nJ));
                     }
                 }
             }
@@ -119,18 +119,18 @@ public class Presentation implements EventHandler<KeyEvent> {
 
     private void checkoutRoutine(){
         for (int nJ = 0; nJ < getNumberJ(); nJ++) {
-            vue.updateViewElements(nJ, game.collisionPlayer(), game.collisionEnemy(), game.getNumberBerserker());
+            vew.updateViewElements(nJ, game.collisionPlayer(), game.collisionEnemy(), game.getNumberBerserker());
         }
         if (game.winCondition()){
             timeline.stop();
             animationTimer.stop();
-            vue.showWinner(game.nWinner());
+            vew.showWinner(game.nWinner());
         }
     }
 
-    //Autres méthodes
+    //Other methods
 
-    public void associateVue(Vue vue){ this.vue = vue; }
+    public void associateVue(Vew vew){ this.vew = vew; }
 
     // Send Data to "Game"
 
@@ -164,7 +164,7 @@ public class Presentation implements EventHandler<KeyEvent> {
 
     public int statZone(int L, int C){ return game.statZone(L,C); }
 
-    public int setTaillePixel(int hauteur) { return game.setTaillePixel(hauteur); }
+    public int setPixelSize(int yScreen) { return game.setPixelSize(yScreen); }
 
     public int getNumberJ() { return game.getNumberJ(); }
 

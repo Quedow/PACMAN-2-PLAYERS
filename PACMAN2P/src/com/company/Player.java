@@ -39,16 +39,16 @@ public class Player extends Entity {
 
     private void berserkerMode(){
         berserker = true;
-        System.out.println("Berserker début.");
+        System.out.println("Berserker start.");
     }
 
     public void incrementBerserkerTime(){
         if (berserker){
             berserkerTime++;
-            if (berserkerTime >= 10){ //10 car cette methode s'effectue 1 fois/s
+            if (berserkerTime >= 10){ //10 because this methods starts 1 time per second
                 berserker = false;
                 berserkerTime = 0;
-                System.out.println("Berserker fin.");
+                System.out.println("Berserker end.");
             }
         }
     }
@@ -56,10 +56,10 @@ public class Player extends Entity {
     public void incrementInvincibleTime(){
         if (invincible){
             invincibleTime++;
-            if (invincibleTime >= 3){ //3 car cette methode s'effectue 3 fois/s
+            if (invincibleTime >= 3){ //3 because this methods starts 3 time per second
                 invincible = false;
                 invincibleTime = 0;
-                System.out.println("Invincible fin.");
+                System.out.println("Invincible end.");
             }
         }
     }
@@ -68,7 +68,7 @@ public class Player extends Entity {
         if (!berserker && !invincible){
             life--;
             invincible = true;
-            System.out.println("Invincible début.");
+            System.out.println("Invincible start.");
         }
     }
 

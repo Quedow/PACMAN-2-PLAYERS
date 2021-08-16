@@ -6,8 +6,8 @@ public class Main {
 
         Game game = new Game();
         Presentation presentation = new Presentation(game);
-        Vue vue = new Vue(presentation);
+        Vew vew = new Vew(presentation);
 
-        presentation.associateVue(vue);
+        presentation.associateVue(vew);
     }
 }

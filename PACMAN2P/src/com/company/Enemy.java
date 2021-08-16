@@ -37,14 +37,14 @@ public class Enemy extends Entity {
         direction.add(new int[]{1, 0});
     }
 
-    public int[] findEnemyDirection(int[][] matriceMap, int Cplayer, int Lplayer) {
+    public int[] findEnemyDirection(int[][] matrixMap, int Cplayer, int Lplayer) {
         ArrayList<int[]> possibleDirection = new ArrayList<int[]>();
         int possibleWay = 0;
         for (int[] ints : direction) {
             int x = ints[0];
             int y = ints[1];
             try {
-                if (matriceMap[LEntity + y][CEntity + x] != 1) {
+                if (matrixMap[LEntity + y][CEntity + x] != 1) {
                     possibleDirection.add(new int[]{x, y});
                     possibleWay++;
                 }
