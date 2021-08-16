@@ -1,6 +1,3 @@
-/*
-PACMAN2P - MAMMA Quentin & LUQUET Steven - A21
- */
 package com.company;
 
 import javafx.scene.Scene;
@@ -16,7 +13,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -116,11 +112,11 @@ public class Vue {
         paneMenu = new Pane();
         paneMenu.setStyle("-fx-background-color: BLACK");
 
-        Text title = new Text("PAC-MAN");
-        title.setStyle("-fx-font: 120 Verdana; -fx-text-fill: YELLOW; -fx-font-weight: bold; -fx-stroke: firebrick; -fx-stroke-width: 4px;");
-        title.setFill(Color.YELLOW);
-        title.setX(longueur/3.0);
-        title.setY(200);
+        Label title = new Label("PAC-MAN");
+        title.setStyle("-fx-font: 120 Verdana; -fx-text-fill: YELLOW; -fx-font-weight: bold;");
+        title.setPrefSize(635,160);
+        title.setLayoutX(longueur/2.0-title.getPrefWidth()/2.0);
+        title.setLayoutY(hauteur/6.0-title.getPrefHeight()/2.0);
 
         onePlayer = new Button("1 PLAYER");
         onePlayer.setStyle("-fx-font: 42 arial; -fx-base: BLACK; -fx-font-weight: bold;");
@@ -198,7 +194,7 @@ public class Vue {
     private void initializeColors() {
         ColorAdjust yellow = new ColorAdjust(); //Yellow car c'est la couleur de base de l'image
         ColorAdjust green = new ColorAdjust();
-        green.setHue(0.3);
+        green.setHue(0.6);
 
         colorAdjusts = Arrays.asList(yellow, green);
     }
@@ -405,7 +401,7 @@ public class Vue {
         }else {
             winner = new Label("Winner : Ghosts");
         }
-        winner.setFont(new Font("Arial", 42));
+        winner.setFont(new Font("Arial", 25));
         winner.setTextFill(Color.WHITE);
         winner.setLayoutX(10);
         winner.setLayoutY(5);

@@ -1,6 +1,3 @@
-/*
-PACMAN2P - MAMMA Quentin & LUQUET Steven - A21
- */
 package com.company;
 
 public class Player extends Entity {

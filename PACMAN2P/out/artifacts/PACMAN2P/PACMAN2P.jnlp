@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="PACMAN2P.jar" size="21474" download="eager" />
+    <jar href="PACMAN2P.jar" size="21420" download="eager" />
   </resources>
   <jfx:javafx-desc  width="600" height="400" main-class="com.company.MVP"  name="PACMAN2P" />
   <update check="background"/>
