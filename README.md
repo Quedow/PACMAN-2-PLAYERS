@@ -10,6 +10,10 @@ If you wish to view or modify the source code it is available under the folder n
 2. You can download skins from the internet to customize your game (.gif for the classic player and .png for the berserker player and enemies). The names of the images must remain the same as the original.
 3. In the main menu, you can choose to play with 1 or 2 players as well as the number of enemies.
 
+<p align="center">
+  <img alt="pac_man_menu" src="https://user-images.githubusercontent.com/73184884/192123843-b5b3cce5-a8f1-4b0f-ba63-b6feb8c8cc20.jpg" width="720"/>
+</p>
+
 ## Rule for creating a Map:
 To create your map, you must create a text file which will have the same name of the file containing the basic map: "PACMAN_MAP.txt". I advise you to keep the basic map either under another name or in another folder so you can recover it at any time. When you start to compose your map, you will have to respect the following code:
 - Put a "0" for enemies spawns (compulsory),
@@ -17,6 +21,10 @@ To create your map, you must create a text file which will have the same name of
 - Put a "2" for paths containing a score ball,
 - Put a "3" for empty paths,
 - Put a "4" for the paths containing a bonus.
+
+<p align="center">
+  <img alt="pac_man_game" src="https://user-images.githubusercontent.com/73184884/192123827-243a5062-9ed4-4ebb-9f9f-fc59af1f0384.jpg" width="720"/>
+</p>
 
 ## Bonuses:
 There will be 3 types of bonus which will be generated randomly according to predefined probabilities:
