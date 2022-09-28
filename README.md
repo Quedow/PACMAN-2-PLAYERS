@@ -3,7 +3,7 @@
 It’s as part of a school project (in duo) of 2nd year of engineering school that we programmed a Pac-Man playable with 2 players on a same computer. The objective was to use animations on JavaFx. We also made some changes to the classic gameplay.
 
 ## Gameplay:
-It uses the same gameplay as the classic Pac-Man with some differences. You would pay attention to collisions between players which cause loss of life, to bonuses which does not necessarily transform players into berserker mode, but which can also give an extra life or a score bonus. The different exits of the map don’t necessarily lead to the opposite exit: it’s random. Use the arrow keys to move with one player and the "W", "A", "S", "D" keys to move with the other player. 
+It uses the same gameplay as the classic Pac-Man with some differences. You would pay attention to collisions between players which cause loss of life, to bonuses which does not necessarily transform players into berserker mode, but which can also give an extra life or a score bonus. The different exits of the map don’t necessarily lead to the opposite exit: it’s random. Use the arrow keys to move with one player and the `W`, `A`, `S`, `D` keys to move with the other player. 
 
 ### Bonuses:
 There will be 3 types of bonus which will be generated randomly according to predefined probabilities:
